@@ -10,16 +10,16 @@ import UIKit
 
 final class ApplicationCoordinator: BaseCoordinator {
     
-    private let coordinatorFactory: ApplicationCoordinatorFactory
+    private let coordinatorFactory: CoordinatorFactory
     private let router: Router
     private let launchManager: LaunchManager
     
     private var window: UIWindow
     
     init(window: UIWindow,
-         router: Router = RouterImpl(),
-         launchManager: LaunchManager = LaunchManagerImpl(),
-         factory: ApplicationCoordinatorFactory = ApplicationCoordinatorFactoryImpl()) {
+         router: Router,
+         launchManager: LaunchManager,
+         factory: CoordinatorFactory) {
         self.router = router
         self.window = window
         self.launchManager = launchManager
@@ -36,17 +36,19 @@ final class ApplicationCoordinator: BaseCoordinator {
     
     private func runRootFlow() {
         switch launchManager.flow {
-        case .flow1:
+        case .auth:
             runFlow1()
-        case .flow2:
+        case .main:
             runFlow2()
         }
     }
     
     private func runFlow1() {
         let navController = UINavigationController()
-        let router = RouterImpl(rootController: navController)
-        var coordinator = coordinatorFactory.makeFlow1Coordinator(router: router, factory: coordinatorFactory)
+        var coordinator = coordinatorFactory.makeFlow1Coordinator(
+            router: RouterImpl(rootController: navController),
+            factory: coordinatorFactory
+        )
         coordinator.flowComplition = { [weak self, weak coordinator] in
             guard let self = self, let coordinator = coordinator else { return }
             self.removeDependency(coordinator)
@@ -60,7 +62,10 @@ final class ApplicationCoordinator: BaseCoordinator {
     
     private func runFlow2() {
         let tabBarController = TabBarAssembly.build()
-        let tabBarCoordinator = coordinatorFactory.makeFlow2TabBarCoordinator(tabBarController: tabBarController, factory: coordinatorFactory)
+        let tabBarCoordinator = coordinatorFactory.makeFlow2TabBarCoordinator(
+            tabBarController:tabBarController,
+            factory: coordinatorFactory
+        )
         tabBarCoordinator.finishFlow = { [weak self, weak tabBarCoordinator] in
             guard let self = self, let coordinator = tabBarCoordinator else { return }
             self.removeDependency(coordinator)

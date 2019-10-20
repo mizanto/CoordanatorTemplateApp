@@ -9,6 +9,6 @@
 import Foundation
 
 enum AppFlow {
-    case flow1
-    case flow2
+    case auth
+    case main
 }

@@ -8,8 +8,10 @@
 
 import UIKit
 
+/// Every screen have own factory that builds screen and hides it under UIViewController.
 final class ViewControllerAssembly {
     
+    /// Inside it's possible to use MVC/MVP/MVVM/VIPER architecture, outside it's just UIViewController.
     static func build(buttonTitle: String, completion: @escaping VoidClosure) -> UIViewController {
         let vc = ViewController()
         vc.buttonTitle = buttonTitle

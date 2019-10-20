@@ -8,12 +8,21 @@
 
 import Foundation
 
+/// The main interface for all coordinators.
 protocol Coordinator: AnyObject {
+    /// Should be called when need to start particular flow.
     func start()
+    /// Adds child coordinators.
+    /// - Parameters:
+    ///     - coordinator: child coordinator
     func addDependency(_ coordinator: Coordinator)
+    /// Removes child coordinator
+    /// - Parameters:
+    ///     - coordinator: child coordinator
     func removeDependency(_ coordinator: Coordinator?)
 }
 
+/// The base class for every coordinator.
 class BaseCoordinator: Coordinator {
     
     var childCoordinators: [Coordinator] = []

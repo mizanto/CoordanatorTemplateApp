@@ -15,13 +15,13 @@ protocol LaunchManager: AnyObject {
 
 final class LaunchManagerImpl: LaunchManager {
     
-    private (set) var flow: AppFlow = .flow1
+    private (set) var flow: AppFlow = .auth
     
     func update(isAuthorized: Bool) {
         if isAuthorized {
-            flow = .flow2
+            flow = .main
         } else {
-            flow = .flow1
+            flow = .auth
         }
     }
     

@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Protocol helps pass data outside current coordinator and handle it in parent coordinator.
 protocol Tab2CoordinatorOutput {
     var finishFlow: VoidClosure? { get set }
 }
@@ -17,10 +18,10 @@ final class Tab2Coordinator: BaseCoordinator, Tab2CoordinatorOutput {
     var finishFlow: VoidClosure?
     
     private let router: Router
-    private let factory: ApplicationCoordinatorFactory
+    private let factory: CoordinatorFactory
     
     init(router: Router,
-         factory: ApplicationCoordinatorFactory = ApplicationCoordinatorFactoryImpl()) {
+         factory: CoordinatorFactory = CoordinatorFactoryImpl()) {
         self.router = router
         self.factory = factory
     }

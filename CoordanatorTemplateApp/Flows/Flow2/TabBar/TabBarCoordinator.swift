@@ -8,8 +8,7 @@
 
 import UIKit
 
-typealias VoidClosure = () -> ()
-
+/// Protocol helps pass data outside current coordinator and handle it in parent coordinator.
 protocol TabBarCoordinatorOutput: class {
     var finishFlow: VoidClosure? { get set }
 }
@@ -18,14 +17,14 @@ final class TabBarCoordinator: BaseCoordinator & TabBarCoordinatorOutput {
     
     var finishFlow: VoidClosure?
     
-    private let factory: ApplicationCoordinatorFactory
+    private let factory: CoordinatorFactory
     private var tabBarController: TabBarControllerCoordinatable
     
     private var tab1Coordinator: (Coordinator & Tab1CoordinatorOutput)!
     private var tab2Coordinator: (Coordinator & Tab2CoordinatorOutput)!
     
     init(tabBarController: TabBarControllerCoordinatable,
-         factory: ApplicationCoordinatorFactory = ApplicationCoordinatorFactoryImpl()) {
+         factory: CoordinatorFactory = CoordinatorFactoryImpl()) {
 
         self.tabBarController = tabBarController
         self.factory = factory
