@@ -14,7 +14,6 @@
 		63797881235AD879006BF843 /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63797880235AD879006BF843 /* ApplicationCoordinator.swift */; };
 		63797883235AD8CE006BF843 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63797882235AD8CE006BF843 /* Coordinator.swift */; };
 		63797885235AD932006BF843 /* CoordinatorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63797884235AD932006BF843 /* CoordinatorFactory.swift */; };
-		63797887235AD9FF006BF843 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63797886235AD9FF006BF843 /* Router.swift */; };
 		6379788B235ADD56006BF843 /* LaunchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6379788A235ADD56006BF843 /* LaunchManager.swift */; };
 		6379788D235ADD85006BF843 /* AppFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6379788C235ADD85006BF843 /* AppFlow.swift */; };
 		6379788F235ADF1A006BF843 /* Flow1Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6379788E235ADF1A006BF843 /* Flow1Coordinator.swift */; };
@@ -35,7 +34,6 @@
 		63797880235AD879006BF843 /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
 		63797882235AD8CE006BF843 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		63797884235AD932006BF843 /* CoordinatorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorFactory.swift; sourceTree = "<group>"; };
-		63797886235AD9FF006BF843 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		6379788A235ADD56006BF843 /* LaunchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchManager.swift; sourceTree = "<group>"; };
 		6379788C235ADD85006BF843 /* AppFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlow.swift; sourceTree = "<group>"; };
 		6379788E235ADF1A006BF843 /* Flow1Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flow1Coordinator.swift; sourceTree = "<group>"; };
@@ -120,17 +118,8 @@
 			children = (
 				63EDD789235C4F3600958A14 /* Typealiases.swift */,
 				63797882235AD8CE006BF843 /* Coordinator.swift */,
-				63EDD784235AF88300958A14 /* Router */,
 			);
 			path = Base;
-			sourceTree = "<group>";
-		};
-		63EDD784235AF88300958A14 /* Router */ = {
-			isa = PBXGroup;
-			children = (
-				63797886235AD9FF006BF843 /* Router.swift */,
-			);
-			path = Router;
 			sourceTree = "<group>";
 		};
 		63EDD785235AF8A700958A14 /* Flows */ = {
@@ -243,7 +232,6 @@
 				63797870235AD58C006BF843 /* ViewController.swift in Sources */,
 				6379786C235AD58C006BF843 /* AppDelegate.swift in Sources */,
 				6379788D235ADD85006BF843 /* AppFlow.swift in Sources */,
-				63797887235AD9FF006BF843 /* Router.swift in Sources */,
 				63797893235AE31C006BF843 /* TabBarCoordinator.swift in Sources */,
 				63797885235AD932006BF843 /* CoordinatorFactory.swift in Sources */,
 				6379788F235ADF1A006BF843 /* Flow1Coordinator.swift in Sources */,

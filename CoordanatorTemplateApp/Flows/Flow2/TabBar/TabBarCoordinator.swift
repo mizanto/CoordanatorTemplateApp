@@ -33,8 +33,7 @@ final class TabBarCoordinator: NSObject, Coordinator, TabBarCoordinatorOutput {
     func start() {
         let firstNavController = UINavigationController()
         firstNavController.tabBarItem.title = "First"
-        let firstRouter = RouterImpl(rootController: firstNavController)
-        var tab1Coordinator = factory.makeTab1Coordinator(router: firstRouter, factory: factory)
+        var tab1Coordinator = factory.makeTab1Coordinator(navigationController: firstNavController, factory: factory)
         tab1Coordinator.finishFlow = { [weak self] in
             guard let self = self else { return }
             self.finishFlow?()
@@ -42,8 +41,7 @@ final class TabBarCoordinator: NSObject, Coordinator, TabBarCoordinatorOutput {
 
         let secondNavController = UINavigationController()
         secondNavController.tabBarItem.title = "Second"
-        let secondRouter = RouterImpl(rootController: secondNavController)
-        var tab2Coordinator = factory.makeTab2Coordinator(router: secondRouter, factory: factory)
+        var tab2Coordinator = factory.makeTab2Coordinator(navigationController: secondNavController, factory: factory)
         tab2Coordinator.finishFlow = { [weak self] in
             guard let self = self else { return }
             self.finishFlow?()

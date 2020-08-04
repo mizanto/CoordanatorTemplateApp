@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 /// Protocol helps pass data outside current coordinator and handle it in parent coordinator.
 protocol Flow1Output {
@@ -19,12 +20,12 @@ final class Flow1Coordinator: Coordinator, Flow1Output {
     
     var flowComplition: VoidClosure?
     
-    private let router: Router
+    private let navigationController: UINavigationController
     private let factory: CoordinatorFactory
     
-    init(router: Router,
+    init(navigationController: UINavigationController,
          factory: CoordinatorFactory) {
-        self.router = router
+        self.navigationController = navigationController
         self.factory = factory
     }
     
@@ -40,6 +41,6 @@ final class Flow1Coordinator: Coordinator, Flow1Output {
                 self.flowComplition?()
             }
         )
-        router.setRootViewController(vc)
+        navigationController.setViewControllers([vc], animated: false)
     }
 }

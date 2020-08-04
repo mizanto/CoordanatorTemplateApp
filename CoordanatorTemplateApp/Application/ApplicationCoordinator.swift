@@ -13,16 +13,13 @@ final class ApplicationCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     
     private let coordinatorFactory: CoordinatorFactory
-    private let router: Router
     private let launchManager: LaunchManager
     
     private var window: UIWindow
     
     init(window: UIWindow,
-         router: Router,
          launchManager: LaunchManager,
          factory: CoordinatorFactory) {
-        self.router = router
         self.window = window
         self.launchManager = launchManager
         self.coordinatorFactory = factory
@@ -48,7 +45,7 @@ final class ApplicationCoordinator: Coordinator {
     private func runFlow1() {
         let navController = UINavigationController()
         var coordinator = coordinatorFactory.makeFlow1Coordinator(
-            router: RouterImpl(rootController: navController),
+            navigationController: navController,
             factory: coordinatorFactory
         )
         coordinator.flowComplition = { [weak self, weak coordinator] in
