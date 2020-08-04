@@ -10,7 +10,7 @@ import UIKit
 
 protocol CoordinatorFactory {
     func makeFlow1Coordinator(router: Router, factory: CoordinatorFactory) -> Coordinator  & Flow1Output
-    func makeFlow2TabBarCoordinator(tabBarController: TabBarControllerCoordinatable, factory: CoordinatorFactory) -> Coordinator & TabBarCoordinatorOutput
+    func makeFlow2TabBarCoordinator(tabBarController: UITabBarController, factory: CoordinatorFactory) -> Coordinator & TabBarCoordinatorOutput
     
     func makeTab1Coordinator(router: Router, factory: CoordinatorFactory) -> Coordinator & Tab1CoordinatorOutput
     func makeTab2Coordinator(router: Router, factory: CoordinatorFactory) -> Coordinator & Tab2CoordinatorOutput
@@ -22,7 +22,7 @@ final class CoordinatorFactoryImpl: CoordinatorFactory {
         return Flow1Coordinator(router: router, factory: factory)
     }
     
-    func makeFlow2TabBarCoordinator(tabBarController: TabBarControllerCoordinatable, factory: CoordinatorFactory) -> Coordinator & TabBarCoordinatorOutput {
+    func makeFlow2TabBarCoordinator(tabBarController: UITabBarController, factory: CoordinatorFactory) -> Coordinator & TabBarCoordinatorOutput {
         return TabBarCoordinator(tabBarController: tabBarController, factory: factory)
     }
     

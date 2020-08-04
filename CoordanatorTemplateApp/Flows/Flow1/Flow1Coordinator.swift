@@ -13,7 +13,9 @@ protocol Flow1Output {
     var flowComplition: VoidClosure? { get set }
 }
 
-final class Flow1Coordinator: BaseCoordinator, Flow1Output {
+final class Flow1Coordinator: Coordinator, Flow1Output {
+    
+    var childCoordinators: [Coordinator] = []
     
     var flowComplition: VoidClosure?
     
@@ -26,7 +28,7 @@ final class Flow1Coordinator: BaseCoordinator, Flow1Output {
         self.factory = factory
     }
     
-    override func start() {
+    func start() {
         showScreen()
     }
     
@@ -40,5 +42,4 @@ final class Flow1Coordinator: BaseCoordinator, Flow1Output {
         )
         router.setRootViewController(vc)
     }
-    
 }

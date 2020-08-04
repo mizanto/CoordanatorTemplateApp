@@ -8,7 +8,9 @@
 
 import UIKit
 
-final class ApplicationCoordinator: BaseCoordinator {
+final class ApplicationCoordinator: Coordinator {
+    
+    var childCoordinators: [Coordinator] = []
     
     private let coordinatorFactory: CoordinatorFactory
     private let router: Router
@@ -26,7 +28,7 @@ final class ApplicationCoordinator: BaseCoordinator {
         self.coordinatorFactory = factory
     }
     
-    override func start() {
+    func start() {
         window.makeKeyAndVisible()
         
         launchManager.update(isAuthorized: false)
@@ -61,7 +63,7 @@ final class ApplicationCoordinator: BaseCoordinator {
     }
     
     private func runFlow2() {
-        let tabBarController = TabBarAssembly.build()
+        let tabBarController = UITabBarController()
         let tabBarCoordinator = coordinatorFactory.makeFlow2TabBarCoordinator(
             tabBarController:tabBarController,
             factory: coordinatorFactory

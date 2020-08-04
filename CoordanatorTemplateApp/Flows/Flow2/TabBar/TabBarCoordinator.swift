@@ -9,86 +9,64 @@
 import UIKit
 
 /// Protocol helps pass data outside current coordinator and handle it in parent coordinator.
-protocol TabBarCoordinatorOutput: class {
+protocol TabBarCoordinatorOutput: AnyObject {
     var finishFlow: VoidClosure? { get set }
 }
 
-final class TabBarCoordinator: BaseCoordinator & TabBarCoordinatorOutput {
+final class TabBarCoordinator: NSObject, Coordinator, TabBarCoordinatorOutput {
     
+    var childCoordinators: [Coordinator] = []
     var finishFlow: VoidClosure?
     
     private let factory: CoordinatorFactory
-    private var tabBarController: TabBarControllerCoordinatable
-    
-    private var tab1Coordinator: (Coordinator & Tab1CoordinatorOutput)!
-    private var tab2Coordinator: (Coordinator & Tab2CoordinatorOutput)!
-    
-    init(tabBarController: TabBarControllerCoordinatable,
-         factory: CoordinatorFactory = CoordinatorFactoryImpl()) {
-
+    private var tabBarController: UITabBarController
+ 
+    init(tabBarController: UITabBarController, factory: CoordinatorFactory = CoordinatorFactoryImpl()) {
         self.tabBarController = tabBarController
         self.factory = factory
+        
         super.init()
+        
+        tabBarController.delegate = self
     }
-    
-    override func start() {
+
+    func start() {
         let firstNavController = UINavigationController()
+        firstNavController.tabBarItem.title = "First"
         let firstRouter = RouterImpl(rootController: firstNavController)
-        tab1Coordinator = factory.makeTab1Coordinator(router: firstRouter, factory: factory)
+        var tab1Coordinator = factory.makeTab1Coordinator(router: firstRouter, factory: factory)
         tab1Coordinator.finishFlow = { [weak self] in
             guard let self = self else { return }
-            self.removeDependency(self.tab1Coordinator)
-            self.removeDependency(self.tab2Coordinator)
             self.finishFlow?()
         }
 
         let secondNavController = UINavigationController()
+        secondNavController.tabBarItem.title = "Second"
         let secondRouter = RouterImpl(rootController: secondNavController)
-        tab2Coordinator = factory.makeTab2Coordinator(router: secondRouter, factory: factory)
+        var tab2Coordinator = factory.makeTab2Coordinator(router: secondRouter, factory: factory)
         tab2Coordinator.finishFlow = { [weak self] in
             guard let self = self else { return }
-            self.removeDependency(self.tab1Coordinator)
-            self.removeDependency(self.tab2Coordinator)
             self.finishFlow?()
         }
         
-        tabBarController.setup(firstRootController: firstNavController,
-                               secondRootController: secondNavController)
+        tabBarController.viewControllers = [
+            firstNavController,
+            secondNavController
+        ]
+
+        addDependency(tab1Coordinator)
+        addDependency(tab2Coordinator)
         
-        tabBarController.onFirstTabSelect = makeTab1Flow(with: tab1Coordinator)
-        tabBarController.onSecondTabSelect = makeTab2Flow(with: tab2Coordinator)
+        tab1Coordinator.start()
     }
+}
+
+// MARK: - UITabBarControllerDelegate
+
+extension TabBarCoordinator: UITabBarControllerDelegate {
     
-    private func makeTab1Flow(with coordinator: Coordinator) -> TabSelectionHandler {
-        return { [weak self, weak coordinator] vc in
-            guard
-                let navController = vc as? UINavigationController,
-                let coordinator = coordinator,
-                let self = self else {
-                    return
-            }
-            
-            if navController.viewControllers.isEmpty {
-                self.addDependency(coordinator)
-                coordinator.start()
-            }
-        }
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        let selectedCoordinator = childCoordinators[tabBarController.selectedIndex]
+        selectedCoordinator.start()
     }
-    
-    private func makeTab2Flow(with coordinator: Coordinator) -> TabSelectionHandler {
-        return { [weak self, weak coordinator] vc in
-            guard
-                let navController = vc as? UINavigationController,
-                let coordinator = coordinator,
-                let self = self else {
-                    return
-            }
-            
-            if navController.viewControllers.isEmpty {
-                self.addDependency(coordinator)
-                coordinator.start()
-            }
-        }
-    }
-    
 }

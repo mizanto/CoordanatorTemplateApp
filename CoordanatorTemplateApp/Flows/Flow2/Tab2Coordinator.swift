@@ -13,7 +13,9 @@ protocol Tab2CoordinatorOutput {
     var finishFlow: VoidClosure? { get set }
 }
 
-final class Tab2Coordinator: BaseCoordinator, Tab2CoordinatorOutput {
+final class Tab2Coordinator: Coordinator, Tab2CoordinatorOutput {
+    
+    var childCoordinators: [Coordinator] = []
     
     var finishFlow: VoidClosure?
     
@@ -25,8 +27,8 @@ final class Tab2Coordinator: BaseCoordinator, Tab2CoordinatorOutput {
         self.router = router
         self.factory = factory
     }
-    
-    override func start() {
+
+    func start() {
         showScreen()
     }
     

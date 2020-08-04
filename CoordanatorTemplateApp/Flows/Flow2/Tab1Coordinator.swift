@@ -13,8 +13,9 @@ protocol Tab1CoordinatorOutput {
     var finishFlow: VoidClosure? { get set }
 }
 
-final class Tab1Coordinator: BaseCoordinator, Tab1CoordinatorOutput {
+final class Tab1Coordinator: Coordinator, Tab1CoordinatorOutput {
     
+    var childCoordinators: [Coordinator] = []
     var finishFlow: VoidClosure?
     
     private let router: Router
@@ -26,10 +27,10 @@ final class Tab1Coordinator: BaseCoordinator, Tab1CoordinatorOutput {
         self.factory = factory
     }
     
-    override func start() {
+    func start() {
         showScreen()
     }
-    
+
     private func showScreen() {
         let vc = ViewControllerAssembly.build(
             buttonTitle: "Finish Flow",

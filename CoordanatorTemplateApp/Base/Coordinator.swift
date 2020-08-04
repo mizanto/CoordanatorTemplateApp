@@ -1,5 +1,5 @@
 //
-//  BaseCoordinator.swift
+//  Coordinator.swift
 //  CoordanatorTemplateApp
 //
 //  Created by sergey.bendak on 10/19/19.
@@ -10,12 +10,16 @@ import Foundation
 
 /// The main interface for all coordinators.
 protocol Coordinator: AnyObject {
+    var childCoordinators: [Coordinator] { get set }
+    
     /// Should be called when need to start particular flow.
     func start()
+    
     /// Adds child coordinators.
     /// - Parameters:
     ///     - coordinator: child coordinator
     func addDependency(_ coordinator: Coordinator)
+    
     /// Removes child coordinator
     /// - Parameters:
     ///     - coordinator: child coordinator
@@ -23,13 +27,7 @@ protocol Coordinator: AnyObject {
 }
 
 /// The base class for every coordinator.
-class BaseCoordinator: Coordinator {
-    
-    var childCoordinators: [Coordinator] = []
-    
-    func start() {
-        fatalError("Should be implemented in inherited class!")
-    }
+extension Coordinator {
     
     func addDependency(_ coordinator: Coordinator) {
         guard !childCoordinators.contains(where: { $0 === coordinator }) else { return }
@@ -44,8 +42,7 @@ class BaseCoordinator: Coordinator {
         }
         
         // Clear child-coordinators recursively
-        if let coordinator = coordinator as? BaseCoordinator,
-           !coordinator.childCoordinators.isEmpty {
+        if !coordinator.childCoordinators.isEmpty {
             coordinator.childCoordinators
                 .filter({ $0 !== coordinator })
                 .forEach({ coordinator.removeDependency($0) })
@@ -56,5 +53,4 @@ class BaseCoordinator: Coordinator {
             break
         }
     }
-    
 }
