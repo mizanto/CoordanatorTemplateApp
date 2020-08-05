@@ -20,12 +20,9 @@ final class Tab1Coordinator: Coordinator, Tab1CoordinatorOutput {
     var finishFlow: VoidClosure?
     
     private let navigationController: UINavigationController
-    private let factory: CoordinatorFactory
-    
-    init(navigationController: UINavigationController,
-         factory: CoordinatorFactory) {
+
+    init(navigationController: UINavigationController) {
         self.navigationController = navigationController
-        self.factory = factory
     }
     
     func start() {

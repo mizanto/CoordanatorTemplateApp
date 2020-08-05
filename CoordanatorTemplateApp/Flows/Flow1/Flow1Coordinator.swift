@@ -21,12 +21,9 @@ final class Flow1Coordinator: Coordinator, Flow1Output {
     var flowComplition: VoidClosure?
     
     private let navigationController: UINavigationController
-    private let factory: CoordinatorFactory
     
-    init(navigationController: UINavigationController,
-         factory: CoordinatorFactory) {
+    init(navigationController: UINavigationController) {
         self.navigationController = navigationController
-        self.factory = factory
     }
     
     func start() {

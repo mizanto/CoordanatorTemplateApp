@@ -21,12 +21,9 @@ final class Tab2Coordinator: Coordinator, Tab2CoordinatorOutput {
     var finishFlow: VoidClosure?
     
     private let navigationController: UINavigationController
-    private let factory: CoordinatorFactory
-    
-    init(navigationController: UINavigationController,
-         factory: CoordinatorFactory = CoordinatorFactoryImpl()) {
+
+    init(navigationController: UINavigationController) {
         self.navigationController = navigationController
-        self.factory = factory
     }
 
     func start() {

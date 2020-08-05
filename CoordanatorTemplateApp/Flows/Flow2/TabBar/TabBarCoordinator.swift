@@ -18,12 +18,10 @@ final class TabBarCoordinator: NSObject, Coordinator, TabBarCoordinatorOutput {
     var childCoordinators: [Coordinator] = []
     var finishFlow: VoidClosure?
     
-    private let factory: CoordinatorFactory
     private var tabBarController: UITabBarController
  
-    init(tabBarController: UITabBarController, factory: CoordinatorFactory = CoordinatorFactoryImpl()) {
+    init(tabBarController: UITabBarController) {
         self.tabBarController = tabBarController
-        self.factory = factory
         
         super.init()
         
@@ -33,7 +31,7 @@ final class TabBarCoordinator: NSObject, Coordinator, TabBarCoordinatorOutput {
     func start() {
         let firstNavController = UINavigationController()
         firstNavController.tabBarItem.title = "First"
-        var tab1Coordinator = factory.makeTab1Coordinator(navigationController: firstNavController, factory: factory)
+        var tab1Coordinator = CoordinatorFactory.makeTab1Coordinator(navigationController: firstNavController)
         tab1Coordinator.finishFlow = { [weak self] in
             guard let self = self else { return }
             self.finishFlow?()
@@ -41,7 +39,7 @@ final class TabBarCoordinator: NSObject, Coordinator, TabBarCoordinatorOutput {
 
         let secondNavController = UINavigationController()
         secondNavController.tabBarItem.title = "Second"
-        var tab2Coordinator = factory.makeTab2Coordinator(navigationController: secondNavController, factory: factory)
+        var tab2Coordinator = CoordinatorFactory.makeTab2Coordinator(navigationController: secondNavController)
         tab2Coordinator.finishFlow = { [weak self] in
             guard let self = self else { return }
             self.finishFlow?()
