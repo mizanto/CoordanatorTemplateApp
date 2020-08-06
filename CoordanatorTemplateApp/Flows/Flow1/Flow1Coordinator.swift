@@ -14,10 +14,8 @@ protocol Flow1Output {
     var flowComplition: VoidClosure? { get set }
 }
 
-final class Flow1Coordinator: Coordinator, Flow1Output {
-    
-    var childCoordinators: [Coordinator] = []
-    
+final class Flow1Coordinator: BaseCoordinator, Flow1Output {
+
     var flowComplition: VoidClosure?
     
     private let navigationController: UINavigationController
@@ -26,7 +24,7 @@ final class Flow1Coordinator: Coordinator, Flow1Output {
         self.navigationController = navigationController
     }
     
-    func start() {
+    override func start() {
         showScreen()
     }
     

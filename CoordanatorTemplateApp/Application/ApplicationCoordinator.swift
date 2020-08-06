@@ -8,10 +8,8 @@
 
 import UIKit
 
-final class ApplicationCoordinator: Coordinator {
-    
-    var childCoordinators: [Coordinator] = []
-    
+final class ApplicationCoordinator: BaseCoordinator {
+
     private let launchManager: LaunchManager
     private var window: UIWindow
     
@@ -20,7 +18,7 @@ final class ApplicationCoordinator: Coordinator {
         self.launchManager = launchManager
     }
     
-    func start() {
+    override func start() {
         window.makeKeyAndVisible()
         
         launchManager.update(isAuthorized: false)

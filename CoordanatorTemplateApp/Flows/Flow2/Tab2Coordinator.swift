@@ -14,10 +14,8 @@ protocol Tab2CoordinatorOutput {
     var finishFlow: VoidClosure? { get set }
 }
 
-final class Tab2Coordinator: Coordinator, Tab2CoordinatorOutput {
-    
-    var childCoordinators: [Coordinator] = []
-    
+final class Tab2Coordinator: BaseCoordinator, Tab2CoordinatorOutput {
+
     var finishFlow: VoidClosure?
     
     private let navigationController: UINavigationController
@@ -26,7 +24,7 @@ final class Tab2Coordinator: Coordinator, Tab2CoordinatorOutput {
         self.navigationController = navigationController
     }
 
-    func start() {
+    override func start() {
         showScreen()
     }
     
