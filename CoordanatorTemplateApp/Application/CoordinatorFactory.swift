@@ -8,30 +8,22 @@
 
 import UIKit
 
-protocol CoordinatorFactory {
-    func makeFlow1Coordinator(router: Router, factory: CoordinatorFactory) -> Coordinator  & Flow1Output
-    func makeFlow2TabBarCoordinator(tabBarController: TabBarControllerCoordinatable, factory: CoordinatorFactory) -> Coordinator & TabBarCoordinatorOutput
+final class CoordinatorFactory {
     
-    func makeTab1Coordinator(router: Router, factory: CoordinatorFactory) -> Coordinator & Tab1CoordinatorOutput
-    func makeTab2Coordinator(router: Router, factory: CoordinatorFactory) -> Coordinator & Tab2CoordinatorOutput
-}
-
-final class CoordinatorFactoryImpl: CoordinatorFactory {
-    
-    func makeFlow1Coordinator(router: Router, factory: CoordinatorFactory) -> Coordinator & Flow1Output {
-        return Flow1Coordinator(router: router, factory: factory)
+    static func makeFlow1Coordinator(navigationController: UINavigationController) -> Coordinator & Flow1Output {
+        return Flow1Coordinator(navigationController: navigationController)
     }
     
-    func makeFlow2TabBarCoordinator(tabBarController: TabBarControllerCoordinatable, factory: CoordinatorFactory) -> Coordinator & TabBarCoordinatorOutput {
-        return TabBarCoordinator(tabBarController: tabBarController, factory: factory)
+    static func makeFlow2TabBarCoordinator(tabBarController: UITabBarController) -> Coordinator & TabBarCoordinatorOutput {
+        return TabBarCoordinator(tabBarController: tabBarController)
     }
     
-    func makeTab1Coordinator(router: Router, factory: CoordinatorFactory) -> Coordinator & Tab1CoordinatorOutput {
-        return Tab1Coordinator(router: router, factory: factory)
+    static func makeTab1Coordinator(navigationController: UINavigationController) -> Coordinator & Tab1CoordinatorOutput {
+        return Tab1Coordinator(navigationController: navigationController)
     }
     
-    func makeTab2Coordinator(router: Router, factory: CoordinatorFactory) -> Coordinator & Tab2CoordinatorOutput {
-        return Tab2Coordinator(router: router, factory: factory)
+    static func makeTab2Coordinator(navigationController: UINavigationController) -> Coordinator & Tab2CoordinatorOutput {
+        return Tab2Coordinator(navigationController: navigationController)
     }
-
+    
 }

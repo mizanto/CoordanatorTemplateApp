@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 /// Protocol helps pass data outside current coordinator and handle it in parent coordinator.
 protocol Tab2CoordinatorOutput {
@@ -14,18 +15,15 @@ protocol Tab2CoordinatorOutput {
 }
 
 final class Tab2Coordinator: BaseCoordinator, Tab2CoordinatorOutput {
-    
+
     var finishFlow: VoidClosure?
     
-    private let router: Router
-    private let factory: CoordinatorFactory
-    
-    init(router: Router,
-         factory: CoordinatorFactory = CoordinatorFactoryImpl()) {
-        self.router = router
-        self.factory = factory
+    private let navigationController: UINavigationController
+
+    init(navigationController: UINavigationController) {
+        self.navigationController = navigationController
     }
-    
+
     override func start() {
         showScreen()
     }
@@ -39,7 +37,7 @@ final class Tab2Coordinator: BaseCoordinator, Tab2CoordinatorOutput {
             }
         )
         vc.title = "Tab 2 Title"
-        router.setRootViewController(vc)
+        navigationController.setViewControllers([vc], animated: false)
     }
     
 }

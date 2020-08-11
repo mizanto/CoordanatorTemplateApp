@@ -9,21 +9,13 @@
 import UIKit
 
 final class ApplicationCoordinator: BaseCoordinator {
-    
-    private let coordinatorFactory: CoordinatorFactory
-    private let router: Router
+
     private let launchManager: LaunchManager
-    
     private var window: UIWindow
     
-    init(window: UIWindow,
-         router: Router,
-         launchManager: LaunchManager,
-         factory: CoordinatorFactory) {
-        self.router = router
+    init(window: UIWindow, launchManager: LaunchManager) {
         self.window = window
         self.launchManager = launchManager
-        self.coordinatorFactory = factory
     }
     
     override func start() {
@@ -45,10 +37,7 @@ final class ApplicationCoordinator: BaseCoordinator {
     
     private func runFlow1() {
         let navController = UINavigationController()
-        var coordinator = coordinatorFactory.makeFlow1Coordinator(
-            router: RouterImpl(rootController: navController),
-            factory: coordinatorFactory
-        )
+        var coordinator = CoordinatorFactory.makeFlow1Coordinator(navigationController: navController)
         coordinator.flowComplition = { [weak self, weak coordinator] in
             guard let self = self, let coordinator = coordinator else { return }
             self.removeDependency(coordinator)
@@ -61,11 +50,8 @@ final class ApplicationCoordinator: BaseCoordinator {
     }
     
     private func runFlow2() {
-        let tabBarController = TabBarAssembly.build()
-        let tabBarCoordinator = coordinatorFactory.makeFlow2TabBarCoordinator(
-            tabBarController:tabBarController,
-            factory: coordinatorFactory
-        )
+        let tabBarController = UITabBarController()
+        let tabBarCoordinator = CoordinatorFactory.makeFlow2TabBarCoordinator(tabBarController:tabBarController)
         tabBarCoordinator.finishFlow = { [weak self, weak tabBarCoordinator] in
             guard let self = self, let coordinator = tabBarCoordinator else { return }
             self.removeDependency(coordinator)
